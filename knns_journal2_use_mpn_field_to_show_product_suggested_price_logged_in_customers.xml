@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification
+	xmlns="https://github.com/vqmod/vqmod"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://github.com/vqmod/vqmod https://raw.githubusercontent.com/vqmod/vqmod/master/vqmod.xsd">
+	>
+	<id><![CDATA[[VQMOD] Journal 2 - Advanced Opencart Theme: Use MPN field to show product's "Suggested Price" to logged in customers]]></id>
+	<version>1.0.0</version>
+	<vqmver>2.6.3</vqmver>
+	<author>kanenas.net (aka Nikolas Branis) - nbran@kanenas.net</author>
+	<file path="admin/language/english/catalog/" name="product.php" error="log">
+		<operation error="skip">
+			<search position="replace"><![CDATA[$_['entry_mpn']              = 'MPN';]]></search>
+			<add><![CDATA[
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+$_['entry_mpn']              = 'Suggested Price';
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA[$_['help_mpn']               = 'Manufacturer Part Number';]]></search>
+			<add><![CDATA[
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+$_['help_mpn']               = 'This is the Suggested Price for B2B clients';
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/language/greek/catalog/" name="product.php" error="log">
+		<operation error="skip">
+			<search position="replace"><![CDATA[$_['entry_mpn']              = 'MPN';]]></search>
+			<add><![CDATA[
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+$_['entry_mpn']              = 'Προτεινόμενη Τιμή';
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="replace"><![CDATA[$_['help_mpn']               = 'Κωδικός Είδους Κατασκευαστή (Manufacturer Part Number).';]]></search>
+			<add><![CDATA[
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+$_['help_mpn']               = 'Είναι η Προτεινόμενη Τιμή για τους πελάτες B2B';
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/language/english/product/" name="product.php" error="log">
+		<operation error="skip">
+			<search position="before"><![CDATA[$_['text_reward']              = 'Reward Points:';]]></search>
+			<add><![CDATA[
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+$_['text_suggested_price']              = 'Suggested Price:';
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/language/greek/product/" name="product.php" error="log">
+		<operation error="skip">
+			<search position="before"><![CDATA[$_['text_reward']              = 'Πόντοι Ανταμοιβής:';]]></search>
+			<add><![CDATA[
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+$_['text_suggested_price']              = 'Προτεινόμενη Τιμή:';
+// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/product/" name="product.php" error="log">
+		<operation error="skip">
+			<search position="before"><![CDATA[$data['text_reward'] = $this->language->get('text_reward');]]></search>
+			<add><![CDATA[
+			// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+			$data['text_suggested_price'] = $this->language->get('text_suggested_price');
+			// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="before"><![CDATA[$data['reward'] = $product_info['reward'];]]></search>
+			<add><![CDATA[
+			// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) <<
+			$data['mpn'] = $product_info['mpn'];
+			// kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) <<
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/journal2/template/product/" name="product.tpl" error="log">
+		<operation error="skip">
+			<search position="before"><![CDATA[<?php if ($tax) { ?>]]></search>
+			<add><![CDATA[
+            <?php // kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (start) << ?>
+            <?php if ($this->customer->isLogged()) { ?>
+              <?php if ($mpn) { ?>
+                <li class="knns-suggested-price"><?php echo $text_suggested_price; ?><span class="knns-suggested-price"><?php echo $mpn; ?>&euro;</span></li>
+              <?php } ?>
+            <?php } ?>
+            <?php // kanenas: knns_journal2_use_mpn_field_to_show_product_suggested_price_logged_in_customers.xml (end) << ?>
+			]]></add>
+		</operation>
+	</file>
+</modification>
